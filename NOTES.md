@@ -95,6 +95,7 @@ For this, we need:
 - Image [Optional]
   - Probably won't include in first phase
 - Likes, comments
+  - If any of this happens we could have in app (or maybe browser based) notifications about it
 - Maybe some sort of repost? Do a solve on someone's scramble and reference that
   - In the first phase, this should probably be an optional feature, could be added later on, too
 - Mark a solve as PR, or have this automatically (always marking the best time as PR)?
@@ -111,6 +112,8 @@ Should have a feed:
 Should be able to look at own solves:
 
 - Also needs chunks
+
+On the frontend we could also add some stats
 
 ## Technologies
 
@@ -134,5 +137,15 @@ Other:
 - I don't want to use Nx, as it has a lot of overhead of configuring everything, may switch to it later though. However, right now I don't want to spend too much time on configuring apps, libraries, and dependencies, etc.
 
 ## DataBase, Tables, etc.
+
+Porbably needed Tables:
+
+- User
+- Follow
+- Solve
+- Post
+- Like
+- Comment
+- Notification?
 
 @todo Create tables and connections in Lucid
