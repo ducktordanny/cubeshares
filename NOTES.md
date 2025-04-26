@@ -2,7 +2,7 @@
 
 ## What we want?
 
-- Users
+### Users
 
 For a first step, I want users to be able to log in through their WCA account.
 
@@ -50,4 +50,68 @@ I've created a WCA application for the authentication, which can be checked here
 
 What if I want to fetch other existing users?
 
+`https://www.worldcubeassociation.org/api/v0/persons/{wca_id}` can also fetch user data, and returns some additional metadata, too, eg.:
+
+```json
+{
+  "person": {
+    // same as .me
+  },
+  "competition_count": 10,
+  "personal_records": {
+    // all event records, it's a lot
+  },
+  "medals": {
+    "gold": 0,
+    "silver": 0,
+    "bronze": 0,
+    "total": 0
+  },
+  "records": {
+    "national": 2,
+    "continental": 0,
+    "world": 0,
+    "total": 1
+  }
+}
+```
+
+This endpoint returns back a lot of useful and nice info, though probably not needed. I don't want to show WCA records and stats on CubeIt, but just have a link to the WCA profile instead.
+
+I also want to store users in my own db, so I can have some additional features, like follow and maybe some additional info later.
+
+### Solves
+
+> The main topic of the site should be to be able to store personal records made at home and share solves with others.
+
+For this, we need:
+
+- Category (333, 222, 444, 555, 666, etc.)
+- Time(s)
+- Scramble(s)
+  - On the frontend, draw the preview of scramble, use cstimer module
+- Penalty [Optional]
+- Solution [Optional]
+- Image [Optional]
+  - Probably won't include in first phase
+- Likes, comments
+- Maybe some sort of repost? Do a solve on someone's scramble and reference that
+  - In the first phase, this should probably be an optional feature, could be added later on, too
+- Mark a solve as PR, or have this automatically (always marking the best time as PR)?
+  - In case of reposting the solve should not count as PR
+- External share? Preview? Kinda like Strava
+- Share multiple solves in one post, e.g. ao5, ao12, etc. (allowing above gives me concerns in storage space, PoC needed)
+  - In this case, should also think of optimization. In case if we could share bigger averages, like ao100 and above, we should handle data responses in chunks.
+
+Should have a feed:
+
+- Showing followed people's posts
+- Optimization: Responses in chunks
+
+Should be able to look at own solves:
+
+- Also needs chunks
+
 ## DataBase, Tables, etc.
+
+@todo Create tables and connections in Lucid
