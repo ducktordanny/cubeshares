@@ -112,6 +112,27 @@ Should be able to look at own solves:
 
 - Also needs chunks
 
+## Technologies
+
+Frontend:
+
+- Angular
+- Angular Material
+
+Backend:
+
+- Go
+- Gin
+
+Db:
+
+- PostgreSQL
+- Running inside Docker
+
+Other:
+
+- I don't want to use Nx, as it has a lot of overhead of configuring everything, may switch to it later though. However, right now I don't want to spend too much time on configuring apps, libraries, and dependencies, etc.
+
 ## DataBase, Tables, etc.
 
 @todo Create tables and connections in Lucid
