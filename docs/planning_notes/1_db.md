@@ -28,7 +28,6 @@ Porbably needed Tables and their attributes:
   - id
   - user_id
   - category_id
-  - average_id
   - penalty_id
   - time
   - scramble
@@ -42,6 +41,12 @@ Porbably needed Tables and their attributes:
   - average_time
   - note
 
+- Average Solve
+
+  - id
+  - average_id
+  - solve_id
+
 - Penalty
 
   - id
@@ -54,6 +59,7 @@ Porbably needed Tables and their attributes:
   - solve_id
   - average_id
   - description
+  - created_at
 
 - Like
 
@@ -70,4 +76,6 @@ Porbably needed Tables and their attributes:
   - content
   - created_at
 
-@todo Create tables and connections in Lucid
+ER Diagram of database: See below or [in Lucid project](https://lucid.app/lucidchart/ab6226c4-6f45-43fa-b24a-b640c2b84a78/edit?viewport_loc=-92%2C-158%2C2380%2C1295%2C0_0&invitationId=inv_375ddb79-843f-4e56-aa14-135a594d897a)
+
+![Image for: ER Diagram of database](../assets/database_er_diagram.svg)
