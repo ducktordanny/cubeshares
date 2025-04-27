@@ -9,12 +9,11 @@ import (
 
 	"log"
 
-	"github.com/ducktordanny/cubeit/backend/configs"
 	"github.com/ducktordanny/cubeit/backend/db"
 )
 
 func main() {
-	db, err := db.NewMySQLStorage(configs.Envs.DBConnectionURL)
+	db, err := db.NewPostgresStorage(db.GetConnectionURL())
 	if err != nil {
 		log.Fatal(err)
 	}
