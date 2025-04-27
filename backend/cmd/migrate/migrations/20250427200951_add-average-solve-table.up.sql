@@ -1,0 +1,5 @@
+CREATE TABLE IF NOT EXISTS "average_solve" (
+  id SERIAL PRIMARY KEY,
+  average_id INT NOT NULL REFERENCES average(id) ON DELETE CASCADE,
+  solve_id INT NOT NULL REFERENCES solve(id) ON DELETE CASCADE
+);

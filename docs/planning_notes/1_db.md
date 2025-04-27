@@ -33,13 +33,15 @@ Porbably needed Tables and their attributes:
   - scramble
   - solution
   - note
+  - created_at
 
 - Average
 
   - id
   - user_id
-  - average_time
+  - result
   - note
+  - created_at
 
 - Average Solve
 
