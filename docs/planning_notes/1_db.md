@@ -29,7 +29,7 @@ Porbably needed Tables and their attributes:
   - user_id
   - category_id
   - penalty_id
-  - time
+  - result (not calling this time, allows more flexibility for e.g. fmc)
   - scramble
   - solution
   - note
