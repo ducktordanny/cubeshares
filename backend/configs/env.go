@@ -7,6 +7,7 @@ import (
 )
 
 type Config struct {
+	Port             string
 	DBName           string
 	DBUser           string
 	DBPassword       string
@@ -21,6 +22,7 @@ func initConfig() Config {
 	godotenv.Load()
 
 	return Config{
+		Port:             getEnv("PORT", "6969"),
 		DBName:           getEnv("POSTGRES_DB", "cubeit-local"),
 		DBUser:           getEnv("POSTGRES_USER", "admin"),
 		DBPassword:       getEnv("POSTGRES_PASSWORD", "something"),
