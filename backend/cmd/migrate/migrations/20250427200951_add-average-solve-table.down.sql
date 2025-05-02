@@ -1,1 +1,1 @@
-DROP TABLE IF EXISTS "average_solve";
+DROP TABLE IF EXISTS "averageSolve";

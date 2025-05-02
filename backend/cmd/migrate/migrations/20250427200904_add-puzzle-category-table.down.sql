@@ -1,1 +1,1 @@
-DROP TABLE IF EXISTS "puzzle_category"
+DROP TABLE IF EXISTS "puzzleCategory"

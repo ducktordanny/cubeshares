@@ -5,18 +5,18 @@ Porbably needed Tables and their attributes:
 - User
 
   - id
-  - wca_id
+  - wcaId
   - name
   - email
-  - avatar_url
+  - avatarUrl
   - role
-  - created_at
+  - createdAt
 
 - Follow
 
-  - follower_id
-  - following_id
-  - created_at
+  - followerId
+  - followingId
+  - createdAt
 
 - PuzzleCategory
 
@@ -26,28 +26,28 @@ Porbably needed Tables and their attributes:
 - Solve
 
   - id
-  - user_id
-  - category_id
-  - penalty_id
+  - userId
+  - categoryId
+  - penaltyId
   - result (not calling this time, allows more flexibility for e.g. fmc)
   - scramble
   - solution
   - note
-  - created_at
+  - createdAt
 
 - Average
 
   - id
-  - user_id
+  - userId
   - result
   - note
-  - created_at
+  - createdAt
 
 - Average Solve
 
   - id
-  - average_id
-  - solve_id
+  - averageId
+  - solveId
 
 - Penalty
 
@@ -57,26 +57,26 @@ Porbably needed Tables and their attributes:
 - Post
 
   - id
-  - user_id
-  - solve_id
-  - average_id
+  - userId
+  - solveId
+  - averageId
   - description
-  - created_at
+  - createdAt
 
 - Like
 
   - id
-  - user_id
-  - post_id
-  - created_at
+  - userId
+  - postId
+  - createdAt
 
 - Comment
 
   - id
-  - user_id
-  - post_id
+  - userId
+  - postId
   - content
-  - created_at
+  - createdAt
 
 ER Diagram of database: See below or [in Lucid project](https://lucid.app/lucidchart/ab6226c4-6f45-43fa-b24a-b640c2b84a78/edit?viewport_loc=-92%2C-158%2C2380%2C1295%2C0_0&invitationId=inv_375ddb79-843f-4e56-aa14-135a594d897a)
 
