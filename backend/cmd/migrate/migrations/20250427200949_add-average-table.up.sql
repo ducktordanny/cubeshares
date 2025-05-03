@@ -1,0 +1,7 @@
+CREATE TABLE IF NOT EXISTS "average" (
+  "id" SERIAL PRIMARY KEY,
+  "userId" INT NOT NULL REFERENCES "user"(id) ON DELETE CASCADE,
+  "result" INT NOT NULL,
+  "note" TEXT,
+  "createdAt" TIMESTAMP NOT NULL DEFAULT NOW()
+);
