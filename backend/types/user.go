@@ -5,6 +5,7 @@ import (
 )
 
 type UserStore interface {
+	GetUserById(id int64) (User, error)
 	RegisterOrUpdateUser(wcaUser WCAUser) (User, error)
 	GetWCAUser(accessToken string) (WCAUser, error)
 }
