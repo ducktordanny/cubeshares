@@ -12,6 +12,7 @@ type Config struct {
 	RedirectURI      string
 	ClientID         string
 	ClientSecret     string
+	JWTSecret        []byte
 	DBName           string
 	DBUser           string
 	DBPassword       string
@@ -34,6 +35,7 @@ func initConfig() Config {
 		),
 		ClientID:         getEnv("CLIENT_ID", ""),
 		ClientSecret:     getEnv("CLIENT_SECRET", ""),
+		JWTSecret:        getEnvBytes("JWT_SECRET", []byte{}),
 		DBName:           getEnv("POSTGRES_DB", "cubeit-local"),
 		DBUser:           getEnv("POSTGRES_USER", "admin"),
 		DBPassword:       getEnv("POSTGRES_PASSWORD", "something"),
@@ -46,6 +48,13 @@ func initConfig() Config {
 func getEnv(key, fallback string) string {
 	if value, ok := os.LookupEnv(key); ok {
 		return value
+	}
+	return fallback
+}
+
+func getEnvBytes(key string, fallback []byte) []byte {
+	if value, ok := os.LookupEnv(key); ok {
+		return []byte(value)
 	}
 	return fallback
 }

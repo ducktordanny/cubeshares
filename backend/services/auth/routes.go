@@ -8,10 +8,12 @@ import (
 	"log"
 	"net/http"
 	"net/url"
+	"time"
 
 	"github.com/ducktordanny/cubeit/backend/configs"
 	"github.com/ducktordanny/cubeit/backend/types"
 	"github.com/gin-gonic/gin"
+	"github.com/golang-jwt/jwt/v5"
 )
 
 type Handler struct {
@@ -34,7 +36,7 @@ func handleLogin(context *gin.Context) {
 		return
 	}
 
-	context.SetCookie("oauth_state", state, 300, "/", "", configs.Envs.Production, true)
+	context.SetCookie("oauthState", state, 300, "/", "", configs.Envs.Production, true)
 
 	authURL, err := url.Parse("https://www.worldcubeassociation.org/oauth/authorize")
 	if err != nil {
@@ -57,14 +59,14 @@ func handleLogin(context *gin.Context) {
 func (handler *Handler) handleOAuthCallback(context *gin.Context) {
 	code := context.Query("code")
 	state := context.Query("state")
-	expectedState, err := context.Cookie("oauth_state")
+	expectedState, err := context.Cookie("oauthState")
 	if err != nil || state != expectedState {
 		fmt.Println(err)
 		context.JSON(http.StatusBadRequest, gin.H{"error": "Invalid or missing state"})
 		return
 	}
 
-	authInfo, err := getAuthInfo(code)
+	authInfo, err := getWCAAuthInfo(code)
 	if err != nil {
 		context.JSON(http.StatusInternalServerError, gin.H{
 			"error": "Failed to exchange code: " + err.Error(),
@@ -87,6 +89,7 @@ func (handler *Handler) handleOAuthCallback(context *gin.Context) {
 		})
 		return
 	}
+	initUserAuthSession(context, user)
 	context.IndentedJSON(http.StatusOK, user)
 }
 
@@ -99,7 +102,7 @@ func generateState(length int) (string, error) {
 	return base64.URLEncoding.EncodeToString(bytes), nil
 }
 
-func getAuthInfo(code string) (types.AuthorizationInfo, error) {
+func getWCAAuthInfo(code string) (types.WCAAuthorizationInfo, error) {
 	form := url.Values{
 		"grant_type":    {"authorization_code"},
 		"client_id":     {configs.Envs.ClientID},
@@ -111,14 +114,34 @@ func getAuthInfo(code string) (types.AuthorizationInfo, error) {
 	tokenURL := "https://www.worldcubeassociation.org/oauth/token"
 	res, err := http.PostForm(tokenURL, form)
 	if err != nil {
-		return types.AuthorizationInfo{}, fmt.Errorf("Request failed: %w", err)
+		return types.WCAAuthorizationInfo{}, fmt.Errorf("Request failed: %w", err)
 	}
 	defer res.Body.Close()
 
-	var auth types.AuthorizationInfo
+	var auth types.WCAAuthorizationInfo
 	if err := json.NewDecoder(res.Body).Decode(&auth); err != nil {
-		return types.AuthorizationInfo{}, fmt.Errorf("Decode failed: %w", err)
+		return types.WCAAuthorizationInfo{}, fmt.Errorf("Decode failed: %w", err)
 	}
 
 	return auth, nil
+}
+
+func initUserAuthSession(context *gin.Context, user types.User) {
+	secret := configs.Envs.JWTSecret
+
+	sessionAge := time.Hour
+	expiresAt := time.Now().Add(sessionAge).Unix()
+
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
+		"sub":   user.Id,
+		"email": user.Email,
+		"exp":   expiresAt,
+	})
+	tokenString, err := token.SignedString(secret)
+	if err != nil {
+		context.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"error": "Failed to sign JWT"})
+		return
+	}
+
+	context.SetCookie("session", tokenString, int(sessionAge.Seconds()), "/", "", configs.Envs.Production, true)
 }
