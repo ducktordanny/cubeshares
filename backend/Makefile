@@ -1,5 +1,5 @@
 build:
-	@go build -o /bin/cubeit-api cmd/main.go
+	@go build -o bin/cubeit-api cmd/main.go
 
 test:
 	@go test -v ./...
@@ -21,8 +21,10 @@ migrate-down:
 	@go run cmd/migrate/main.go down
 
 db-up:
-	@docker compose up
+	@docker compose up -d
 
 db-down:
 	@docker compose down
 	echo "Delete the stopped container if you don't need that anymore."
+
+start: db-up migrate-up run
