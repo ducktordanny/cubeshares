@@ -19,3 +19,10 @@ migrate-up:
 
 migrate-down:
 	@go run cmd/migrate/main.go down
+
+db-up:
+	@docker compose up
+
+db-down:
+	@docker compose down
+	echo "Delete the stopped container if you don't need that anymore."
