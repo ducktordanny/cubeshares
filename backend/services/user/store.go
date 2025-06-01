@@ -80,7 +80,7 @@ func (store *Store) GetWCAUser(accessToken string) (types.WCAUser, error) {
 		return types.WCAUser{}, fmt.Errorf("failed to decode user response: %w", err)
 	}
 	if configs.Envs.Production != true {
-		fmt.Printf("AccessToken of %s: %s\n", wcaMe.Me.Name, accessToken)
+		fmt.Printf("\nWCAAccessToken of %s: %s\n\n", wcaMe.Me.Name, accessToken)
 	}
 	return wcaMe.Me, nil
 }

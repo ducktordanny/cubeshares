@@ -143,5 +143,8 @@ func initUserAuthSession(context *gin.Context, user types.User) {
 		return
 	}
 
+	if configs.Envs.Production != true {
+		fmt.Printf("\nJWT: %s\n\n", tokenString)
+	}
 	context.SetCookie("session", tokenString, int(sessionAge.Seconds()), "/", "", configs.Envs.Production, true)
 }
