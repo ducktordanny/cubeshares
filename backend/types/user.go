@@ -12,7 +12,7 @@ type UserStore interface {
 
 type User struct {
 	Id         int64     `json:"id"`
-	WcaId      *string   `json:"wcaId"`
+	WcaId      *string   `json:"wcaId"` // can be null
 	Name       string    `json:"name"`
 	Email      string    `json:"email"`
 	Gender     string    `json:"gender"`
