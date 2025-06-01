@@ -90,7 +90,7 @@ func (handler *Handler) handleOAuthCallback(context *gin.Context) {
 		return
 	}
 	initUserAuthSession(context, user)
-	context.IndentedJSON(http.StatusOK, user)
+	context.Redirect(http.StatusFound, configs.Envs.ClientAppURL)
 }
 
 func generateState(length int) (string, error) {

@@ -13,14 +13,16 @@ import (
 )
 
 type APIServer struct {
-	port string
-	db   *sql.DB
+	port         string
+	clientAppURL string
+	db           *sql.DB
 }
 
-func NewAPIServer(port string, db *sql.DB) *APIServer {
+func NewAPIServer(port string, clientAppURL string, db *sql.DB) *APIServer {
 	return &APIServer{
-		port: port,
-		db:   db,
+		port:         port,
+		clientAppURL: clientAppURL,
+		db:           db,
 	}
 }
 
@@ -30,6 +32,7 @@ func (server *APIServer) Run() error {
 		AllowOrigins: []string{
 			fmt.Sprintf("http://127.0.0.1:%s", server.port),
 			fmt.Sprintf("http://localhost:%s", server.port),
+			server.clientAppURL,
 		},
 		AllowMethods:  []string{"GET", "POST", "PUT", "DELETE"},
 		AllowHeaders:  []string{"Origin", "Content-Type"},
