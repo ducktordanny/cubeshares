@@ -30,7 +30,7 @@ type WCAAvatar struct {
 type WCAUser struct {
 	Id          int64     `json:"id"`
 	Name        string    `json:"name"`
-	WcaId       *string   `json:"wca_id"`
+	WcaId       *string   `json:"wca_id"` // can be null
 	Gender      string    `json:"gender"`
 	CountryIso2 string    `json:"country_iso2"`
 	Avatar      WCAAvatar `json:"avatar"`
