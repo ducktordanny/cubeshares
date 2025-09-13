@@ -24,7 +24,7 @@ db-up:
 	@docker compose up -d
 
 db-down:
-	@docker compose down
+	@docker compose down -v
 	echo "Delete the stopped container if you don't need that anymore."
 
 start: db-up migrate-up run
