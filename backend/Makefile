@@ -1,11 +1,11 @@
 build:
-	@go build -o bin/cubeit-api cmd/main.go
+	@go build -o bin/cubeshares-api cmd/main.go
 
 test:
 	@go test -v ./...
 
 run: build
-	@./bin/cubeit-api
+	@./bin/cubeshares-api
 
 # mac os
 install-migrate:

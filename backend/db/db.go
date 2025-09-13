@@ -6,7 +6,7 @@ import (
 	_ "github.com/lib/pq"
 	"log"
 
-	"github.com/ducktordanny/cubeit/backend/configs"
+	"github.com/ducktordanny/cubeshares/backend/configs"
 )
 
 func GetConnectionURL() string {

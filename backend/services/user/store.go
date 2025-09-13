@@ -7,8 +7,8 @@ import (
 	"io"
 	"net/http"
 
-	"github.com/ducktordanny/cubeit/backend/configs"
-	"github.com/ducktordanny/cubeit/backend/types"
+	"github.com/ducktordanny/cubeshares/backend/configs"
+	"github.com/ducktordanny/cubeshares/backend/types"
 )
 
 type Store struct {

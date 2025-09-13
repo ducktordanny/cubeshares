@@ -3,7 +3,7 @@ package utils
 import (
 	"net/http"
 
-	"github.com/ducktordanny/cubeit/backend/types"
+	"github.com/ducktordanny/cubeshares/backend/types"
 	"github.com/gin-gonic/gin"
 )
 

@@ -38,7 +38,7 @@ func initConfig() Config {
 		ClientSecret:     getEnv("CLIENT_SECRET", ""),
 		JWTSecret:        getEnvBytes("JWT_SECRET", []byte{}),
 		ClientAppURL:     getEnv("CLIENT_APP_URL", "http://localhost:4242"),
-		DBName:           getEnv("POSTGRES_DB", "cubeit-local"),
+		DBName:           getEnv("POSTGRES_DB", "cubeshares-local"),
 		DBUser:           getEnv("POSTGRES_USER", "admin"),
 		DBPassword:       getEnv("POSTGRES_PASSWORD", "something"),
 		DBHost:           getEnv("POSTGRES_HOST", "localhost"),

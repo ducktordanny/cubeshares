@@ -1,4 +1,4 @@
-# CubeIt Planning Notes
+# Cubeshares Planning Notes
 
 ## What we want?
 
@@ -78,7 +78,7 @@ What if I want to fetch other existing users?
 }
 ```
 
-This endpoint returns back a lot of useful and nice info, though probably not needed. I don't want to show WCA records and stats on CubeIt, but just have a link to the WCA profile instead.
+This endpoint returns back a lot of useful and nice info, though probably not needed. I don't want to show WCA records and stats on cubeshares, but just have a link to the WCA profile instead.
 
 I also want to store users in my own db, so I can have some additional features, like follow and maybe some additional info later.
 

@@ -10,8 +10,8 @@ import (
 	"net/url"
 	"time"
 
-	"github.com/ducktordanny/cubeit/backend/configs"
-	"github.com/ducktordanny/cubeit/backend/types"
+	"github.com/ducktordanny/cubeshares/backend/configs"
+	"github.com/ducktordanny/cubeshares/backend/types"
 	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt/v5"
 )

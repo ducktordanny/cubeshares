@@ -1,4 +1,4 @@
-module github.com/ducktordanny/cubeit/backend
+module github.com/ducktordanny/cubeshares/backend
 
 go 1.24.2
 

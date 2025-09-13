@@ -9,7 +9,7 @@ import (
 
 	"log"
 
-	"github.com/ducktordanny/cubeit/backend/db"
+	"github.com/ducktordanny/cubeshares/backend/db"
 )
 
 func main() {

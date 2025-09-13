@@ -6,8 +6,8 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/ducktordanny/cubeit/backend/services/auth"
-	"github.com/ducktordanny/cubeit/backend/services/user"
+	"github.com/ducktordanny/cubeshares/backend/services/auth"
+	"github.com/ducktordanny/cubeshares/backend/services/user"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
@@ -42,7 +42,7 @@ func (server *APIServer) Run() error {
 	subrouter := router.Group("/api/v1")
 	subrouter.GET("", func(context *gin.Context) {
 		context.IndentedJSON(http.StatusOK, gin.H{
-			"message": "Hello CubeIt API!",
+			"message": "Hello cubeshares API!",
 		})
 	})
 

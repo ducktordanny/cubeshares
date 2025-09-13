@@ -3,9 +3,9 @@ package user
 import (
 	"net/http"
 
-	"github.com/ducktordanny/cubeit/backend/middlewares"
-	"github.com/ducktordanny/cubeit/backend/types"
-	"github.com/ducktordanny/cubeit/backend/utils"
+	"github.com/ducktordanny/cubeshares/backend/middlewares"
+	"github.com/ducktordanny/cubeshares/backend/types"
+	"github.com/ducktordanny/cubeshares/backend/utils"
 	"github.com/gin-gonic/gin"
 )
 
