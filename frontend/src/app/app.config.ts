@@ -3,11 +3,10 @@ import { provideRouter } from '@angular/router';
 import { provideHttpClient } from '@angular/common/http';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
-import Aura from '@primeuix/themes/aura';
-
 import { providePrimeNG } from 'primeng/config';
 
 import { routes } from './app.routes';
+import { CubesharesThemePreset } from './app.theme';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -17,7 +16,10 @@ export const appConfig: ApplicationConfig = {
     provideAnimationsAsync(),
     providePrimeNG({
       theme: {
-        preset: Aura,
+        preset: CubesharesThemePreset,
+        options: {
+          darkModeSelector: false,
+        },
       },
     }),
   ],
