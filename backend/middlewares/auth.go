@@ -3,10 +3,9 @@ package middlewares
 import (
 	"fmt"
 	"net/http"
-	"strings"
 
-	"github.com/ducktordanny/cubeit/backend/configs"
-	"github.com/ducktordanny/cubeit/backend/types"
+	"github.com/ducktordanny/cubeshares/backend/configs"
+	"github.com/ducktordanny/cubeshares/backend/types"
 	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt/v5"
 )
@@ -14,14 +13,13 @@ import (
 func UserAuthSessionMiddleware() gin.HandlerFunc {
 	return func(context *gin.Context) {
 		secret := configs.Envs.JWTSecret
-		auth := context.GetHeader("Authorization")
-		if !strings.HasPrefix(auth, "Bearer ") {
+		tokenString, err := context.Cookie("cubeshares.session")
+		if err != nil {
 			context.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{
 				"error": "Missing token",
 			})
 			return
 		}
-		tokenString := strings.TrimPrefix(auth, "Bearer ")
 
 		claims := &types.AuthClaims{}
 		token, err := jwt.ParseWithClaims(tokenString, claims, func(token *jwt.Token) (interface{}, error) {

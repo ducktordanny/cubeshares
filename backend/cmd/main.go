@@ -4,9 +4,9 @@ import (
 	"database/sql"
 	"log"
 
-	"github.com/ducktordanny/cubeit/backend/cmd/api"
-	"github.com/ducktordanny/cubeit/backend/configs"
-	"github.com/ducktordanny/cubeit/backend/db"
+	"github.com/ducktordanny/cubeshares/backend/cmd/api"
+	"github.com/ducktordanny/cubeshares/backend/configs"
+	"github.com/ducktordanny/cubeshares/backend/db"
 )
 
 func main() {

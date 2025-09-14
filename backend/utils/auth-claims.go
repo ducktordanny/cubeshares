@@ -3,7 +3,7 @@ package utils
 import (
 	"net/http"
 
-	"github.com/ducktordanny/cubeit/backend/types"
+	"github.com/ducktordanny/cubeshares/backend/types"
 	"github.com/gin-gonic/gin"
 )
 
@@ -23,5 +23,4 @@ func GetAuthClaims(context *gin.Context) *types.AuthClaims {
 
 func handleNotFoundClaims(context *gin.Context) {
 	context.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"error": "Couldn't fetch or process auth claims"})
-	return
 }

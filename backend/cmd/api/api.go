@@ -6,8 +6,8 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/ducktordanny/cubeit/backend/services/auth"
-	"github.com/ducktordanny/cubeit/backend/services/user"
+	"github.com/ducktordanny/cubeshares/backend/services/auth"
+	"github.com/ducktordanny/cubeshares/backend/services/user"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
@@ -34,15 +34,16 @@ func (server *APIServer) Run() error {
 			fmt.Sprintf("http://localhost:%s", server.port),
 			server.clientAppURL,
 		},
-		AllowMethods:  []string{"GET", "POST", "PUT", "DELETE"},
-		AllowHeaders:  []string{"Origin", "Content-Type"},
-		ExposeHeaders: []string{"Content-Length"},
-		MaxAge:        8 * time.Hour,
+		AllowCredentials: true,
+		AllowMethods:     []string{"GET", "POST", "PUT", "PATCH", "DELETE"},
+		AllowHeaders:     []string{"Origin", "Content-Type", "Accept", "Authorization"},
+		ExposeHeaders:    []string{"Content-Length"},
+		MaxAge:           8 * time.Hour,
 	}))
 	subrouter := router.Group("/api/v1")
 	subrouter.GET("", func(context *gin.Context) {
 		context.IndentedJSON(http.StatusOK, gin.H{
-			"message": "Hello CubeIt API!",
+			"message": "Hello cubeshares API!",
 		})
 	})
 

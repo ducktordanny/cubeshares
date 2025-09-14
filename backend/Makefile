@@ -1,11 +1,11 @@
 build:
-	@go build -o bin/cubeit-api cmd/main.go
+	@go build -o bin/cubeshares-api cmd/main.go
 
 test:
 	@go test -v ./...
 
 run: build
-	@./bin/cubeit-api
+	@./bin/cubeshares-api
 
 # mac os
 install-migrate:
@@ -24,7 +24,7 @@ db-up:
 	@docker compose up -d
 
 db-down:
-	@docker compose down
+	@docker compose down -v
 	echo "Delete the stopped container if you don't need that anymore."
 
 start: db-up migrate-up run
