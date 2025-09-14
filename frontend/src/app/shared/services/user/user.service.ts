@@ -1,7 +1,6 @@
 import { inject, Injectable, signal } from '@angular/core';
+import { Router } from '@angular/router';
 
-import { ApiService } from '../api';
-import { UserResponse } from './user.type';
 import {
   catchError,
   of,
@@ -13,9 +12,13 @@ import {
   timer,
 } from 'rxjs';
 
+import { ApiService } from '../api';
+import { UserResponse } from './user.type';
+
 @Injectable({ providedIn: 'root' })
 export class UserService {
   readonly loggedInUser = signal<UserResponse | null>(null);
+  private readonly router = inject(Router);
   private readonly api = inject(ApiService);
 
   constructor() {
@@ -30,6 +33,7 @@ export class UserService {
         tap((user) => this.loggedInUser.set(user)),
         catchError(() => {
           this.loggedInUser.set(null);
+          this.router.navigate(['/login']);
           return of(null);
         }),
       );
