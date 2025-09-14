@@ -23,5 +23,4 @@ func GetAuthClaims(context *gin.Context) *types.AuthClaims {
 
 func handleNotFoundClaims(context *gin.Context) {
 	context.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"error": "Couldn't fetch or process auth claims"})
-	return
 }

@@ -34,10 +34,11 @@ func (server *APIServer) Run() error {
 			fmt.Sprintf("http://localhost:%s", server.port),
 			server.clientAppURL,
 		},
-		AllowMethods:  []string{"GET", "POST", "PUT", "DELETE"},
-		AllowHeaders:  []string{"Origin", "Content-Type"},
-		ExposeHeaders: []string{"Content-Length"},
-		MaxAge:        8 * time.Hour,
+		AllowCredentials: true,
+		AllowMethods:     []string{"GET", "POST", "PUT", "PATCH", "DELETE"},
+		AllowHeaders:     []string{"Origin", "Content-Type", "Accept", "Authorization"},
+		ExposeHeaders:    []string{"Content-Length"},
+		MaxAge:           8 * time.Hour,
 	}))
 	subrouter := router.Group("/api/v1")
 	subrouter.GET("", func(context *gin.Context) {

@@ -25,18 +25,25 @@ func NewHandler(store types.UserStore) *Handler {
 }
 
 func (handler *Handler) RegisterRoutes(router *gin.RouterGroup) {
-	router.GET("auth/login", handleLogin)
+	router.POST("auth/logout", handler.handleLogout)
+	router.GET("auth/login", handler.handleLogin)
 	router.GET("oauth/callback", handler.handleOAuthCallback)
 }
 
-func handleLogin(context *gin.Context) {
+func (handler *Handler) handleLogout(context *gin.Context) {
+	context.SetCookie("cubeshares.oauthState", "", -1, "/", "", configs.Envs.Production, true)
+	context.SetCookie("cubeshares.session", "", -1, "/", "", configs.Envs.Production, true)
+	context.IndentedJSON(http.StatusOK, gin.H{"message": "User logged out."})
+}
+
+func (handler *Handler) handleLogin(context *gin.Context) {
 	state, err := generateState(32)
 	if err != nil {
 		context.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to generate state"})
 		return
 	}
 
-	context.SetCookie("oauthState", state, 300, "/", "", configs.Envs.Production, true)
+	context.SetCookie("cubeshares.oauthState", state, 300, "/", "", configs.Envs.Production, true)
 
 	authURL, err := url.Parse("https://www.worldcubeassociation.org/oauth/authorize")
 	if err != nil {
@@ -59,7 +66,7 @@ func handleLogin(context *gin.Context) {
 func (handler *Handler) handleOAuthCallback(context *gin.Context) {
 	code := context.Query("code")
 	state := context.Query("state")
-	expectedState, err := context.Cookie("oauthState")
+	expectedState, err := context.Cookie("cubeshares.oauthState")
 	if err != nil || state != expectedState {
 		fmt.Println(err)
 		context.JSON(http.StatusBadRequest, gin.H{"error": "Invalid or missing state"})
@@ -90,7 +97,7 @@ func (handler *Handler) handleOAuthCallback(context *gin.Context) {
 		return
 	}
 	initUserAuthSession(context, user)
-	context.Redirect(http.StatusFound, configs.Envs.ClientAppURL)
+	context.Redirect(http.StatusSeeOther, configs.Envs.ClientAppURL)
 }
 
 func generateState(length int) (string, error) {
@@ -146,5 +153,5 @@ func initUserAuthSession(context *gin.Context, user types.User) {
 	if configs.Envs.Production != true {
 		fmt.Printf("\nJWT: %s\n\n", tokenString)
 	}
-	context.SetCookie("session", tokenString, int(sessionAge.Seconds()), "/", "", configs.Envs.Production, true)
+	context.SetCookie("cubeshares.session", tokenString, int(sessionAge.Seconds()), "/", "", configs.Envs.Production, true)
 }
