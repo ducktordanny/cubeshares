@@ -10,6 +10,7 @@ import {
   take,
   tap,
   timer,
+  finalize,
 } from 'rxjs';
 
 import { ApiService } from '../api';
@@ -18,6 +19,7 @@ import { UserResponse } from './user.type';
 @Injectable({ providedIn: 'root' })
 export class UserService {
   readonly loggedInUser = signal<UserResponse | null>(null);
+  readonly isLoading = signal<boolean>(true);
   private readonly router = inject(Router);
   private readonly api = inject(ApiService);
 
@@ -26,6 +28,7 @@ export class UserService {
   }
 
   readUserMe(): Observable<UserResponse | null> {
+    this.isLoading.set(true);
     return this.api
       .read<UserResponse>('user/me')
       .pipe(take(1))
@@ -36,6 +39,7 @@ export class UserService {
           this.router.navigate(['/login']);
           return of(null);
         }),
+        finalize(() => this.isLoading.set(false)),
       );
   }
 
