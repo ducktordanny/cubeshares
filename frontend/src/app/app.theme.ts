@@ -1,15 +1,15 @@
 import Aura from '@primeuix/themes/aura';
 import { ColorScale, definePreset, palette } from '@primeuix/themes';
 
-// https://www.figma.com/color-contrast-checker/?background=005082&foreground=ffffff
-const adriaticNavy = palette('#005082') as ColorScale;
-// https://www.figma.com/color-contrast-checker/?background=c7944c&foreground=000000
-const desertHoney = palette('#c7944c') as ColorScale;
+// https://www.figma.com/color-contrast-checker/?background=02023e&foreground=ffffff
+const abyssalIndigo = palette('#005082') as ColorScale;
+// https://www.figma.com/color-contrast-checker/?background=08c7d6&foreground=000000
+const arcticTeal = palette('#c7944c') as ColorScale;
 
 export const CubesharesThemePreset = definePreset(Aura, {
   semantic: {
-    primary: adriaticNavy,
-    secondary: desertHoney,
+    primary: abyssalIndigo,
+    secondary: arcticTeal,
     colorScheme: {
       light: {
         primary: {
