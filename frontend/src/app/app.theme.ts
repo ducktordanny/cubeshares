@@ -4,7 +4,7 @@ import { ColorScale, definePreset, palette } from '@primeuix/themes';
 // https://www.figma.com/color-contrast-checker/?background=02023e&foreground=ffffff
 const abyssalIndigo = palette('#005082') as ColorScale;
 // https://www.figma.com/color-contrast-checker/?background=08c7d6&foreground=000000
-const arcticTeal = palette('#c7944c') as ColorScale;
+const arcticTeal = palette('#08C7D6') as ColorScale;
 
 export const CubesharesThemePreset = definePreset(Aura, {
   semantic: {

@@ -1,7 +1,26 @@
 /* You can add global styles to this file, and also import other style files */
 
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
 html,
 body,
-app-root {
+cubeshares-root {
+  height: 100%;
+  width: 100%;
+}
+
+body {
   background: var(--p-surface-300);
+}
+
+cubeshares-root {
+  display: block;
+}
+
+:root {
+  color-scheme: light;
 }
