@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
+import { JsonPipe } from '@angular/common';
 
 import { ButtonModule } from 'primeng/button';
 
-import { UserService } from '@cubeshares/shared/services/user';
-import { AuthService } from '@cubeshares/shared/services/auth';
-import { JsonPipe } from '@angular/common';
+import { UserService } from '@cubeshares/services/user';
+import { AuthService } from '@cubeshares/services/auth';
 
 @Component({
   selector: 'cubeshares-me-page',

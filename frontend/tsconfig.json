@@ -20,7 +20,8 @@
     "useDefineForClassFields": false,
     "paths": {
       "@cubeshares/pages/*": ["./src/app/pages/*"],
-      "@cubeshares/shared/*": ["./src/app/shared/*"]
+      "@cubeshares/services/*": ["./src/app/services/*"],
+      "@cubeshares/utils": ["./src/app/utils"]
     }
   },
   "angularCompilerOptions": {

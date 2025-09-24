@@ -3,7 +3,7 @@ import { Component, computed, inject, signal } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 
-import { AuthService } from '@cubeshares/shared/services/auth';
+import { AuthService } from '@cubeshares/services/auth';
 
 @Component({
   selector: 'cubeshares-login-page',

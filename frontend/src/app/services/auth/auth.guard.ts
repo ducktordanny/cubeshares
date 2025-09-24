@@ -6,8 +6,10 @@ import {
   Router,
   RouterStateSnapshot,
 } from '@angular/router';
-import { UserService } from '../user';
+
 import { filter, map, tap } from 'rxjs';
+
+import { UserService } from '../user';
 
 export const isLoggedInGuard: CanActivateFn = (
   _route: ActivatedRouteSnapshot,

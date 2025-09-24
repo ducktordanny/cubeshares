@@ -1,6 +1,8 @@
 import { Route } from '@angular/router';
+
+import { isLoggedInGuard } from '@cubeshares/services/auth';
+
 import { MePageComponent } from './me/me.page';
-import { isLoggedInGuard } from '@cubeshares/shared/services/auth';
 
 export const USER_ROUTES: Route[] = [
   {

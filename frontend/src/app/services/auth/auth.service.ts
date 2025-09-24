@@ -4,7 +4,7 @@ import { HttpResponse } from '@angular/common/http';
 
 import { catchError, of, finalize, take, tap } from 'rxjs';
 
-import { api } from '@cubeshares/shared/utils';
+import { api } from '@cubeshares/utils';
 
 import { ApiService } from '../api';
 import { UserService } from '../user';
