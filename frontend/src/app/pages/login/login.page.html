@@ -1,6 +1,15 @@
+<img class="logo" src="/icons/cubeshares-logo.svg" alt="WCA logo" />
 <p-card>
-  <ng-template #header>
-    <h2>Login via</h2>
-  </ng-template>
-  <p-button label="<WCA_ICON> WCA" (onClick)="onLoginViaWCA()" />
+  <ng-template #title> Welcome to Cubeshares! </ng-template>
+  <ng-template #subtitle>Sign in to continue</ng-template>
+  <p-button
+    [label]="buttonState()"
+    [disabled]="isRedirecting()"
+    size="large"
+    (onClick)="onLoginViaWCA()"
+  >
+    <ng-template pTemplate="icon">
+      <img src="/icons/wca-logo.svg" alt="WCA logo" width="32" height="32" />
+    </ng-template>
+  </p-button>
 </p-card>
