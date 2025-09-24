@@ -1,5 +1,3 @@
 @if (user(); as _user) {
   <p>Logged in as {{_user.name}}</p>
-  <pre>{{_user | json}}</pre>
-  <p-button label="Logout" (onClick)="onLogout()" />
 }

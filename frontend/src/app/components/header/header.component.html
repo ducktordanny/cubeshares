@@ -1,0 +1,33 @@
+@let _user = user();
+
+<p-menu
+  #userMenu
+  [model]="userMenuItems"
+  [popup]="true"
+  appendTo="body"
+></p-menu>
+
+<div class="header">
+  <p-toolbar class="toolbar">
+    <ng-template #start>
+      <div class="logo"></div>
+    </ng-template>
+
+    <ng-template #end>
+      @if (_user?.avatarURL; as avatarURL) {
+        <button
+          pRipple
+          type="button"
+          class="avatar-button"
+          aria-haspopup="menu"
+          aria-controls="userMenu"
+          (click)="userMenu.toggle($event)"
+        >
+          <p-avatar class="avatar" shape="circle" [image]="avatarURL" />
+        </button>
+      } @else {
+        <p-avatar class="avatar" shape="circle" icon="pi pi-user" />
+      }
+    </ng-template>
+  </p-toolbar>
+</div>
