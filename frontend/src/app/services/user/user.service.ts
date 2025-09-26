@@ -32,7 +32,7 @@ export class UserService {
 
   pollOnReadUserMe(): void {
     this.resetPreviousPoll.next();
-    timer(0, 30 * 1000)
+    timer(0, 60 * 1000)
       .pipe(
         switchMap(() => this.readUserMe()),
         shareReplay({ bufferSize: 1, refCount: true }),
