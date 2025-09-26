@@ -21,7 +21,7 @@
     <h3>Country</h3>
     <p class="country">
       <span>{{_user.countryISO}}</span>
-      <img src="https://flagsapi.com/{{_user.countryISO}}/flat/32.png">
+      <img src="https://flagsapi.com/{{_user.countryISO}}/flat/32.png" alt="Country flag">
     </p>
   </section>
   <section>
@@ -34,4 +34,4 @@
   </section>
 </p-card>
 
-<cubeshares-user-bio-edit-dialog [visible]="bioEditVisible()" (visibleChange)="bioEditVisible.set($event)" />
+<cubeshares-user-bio-edit-dialog [currentValue]="_user.bio" [visible]="bioEditVisible()" (visibleChange)="bioEditVisible.set($event)" />

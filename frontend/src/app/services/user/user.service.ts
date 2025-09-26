@@ -11,15 +11,18 @@ import {
   tap,
   timer,
   finalize,
+  takeUntil,
+  Subject,
 } from 'rxjs';
 
 import { ApiService } from '../api';
-import { UserResponse } from './user.type';
+import { UpdateUserBioRequestBody, UserResponse } from './user.type';
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
   readonly loggedInUser = signal<UserResponse | null>(null);
   readonly isLoading = signal<boolean>(true);
+  private readonly resetPreviousPoll = new Subject<void>();
   private readonly router = inject(Router);
   private readonly api = inject(ApiService);
 
@@ -27,7 +30,22 @@ export class UserService {
     this.pollOnReadUserMe();
   }
 
-  readUserMe(): Observable<UserResponse | null> {
+  pollOnReadUserMe(): void {
+    this.resetPreviousPoll.next();
+    timer(0, 60 * 1000)
+      .pipe(
+        switchMap(() => this.readUserMe()),
+        shareReplay({ bufferSize: 1, refCount: true }),
+        takeUntil(this.resetPreviousPoll),
+      )
+      .subscribe();
+  }
+
+  updateUserBio(requestBody: UpdateUserBioRequestBody): Observable<void> {
+    return this.api.update('user/me/bio', requestBody)
+  }
+
+  private readUserMe(): Observable<UserResponse | null> {
     this.isLoading.set(true);
     return this.api
       .read<UserResponse>('user/me')
@@ -41,14 +59,5 @@ export class UserService {
         }),
         finalize(() => this.isLoading.set(false)),
       );
-  }
-
-  private pollOnReadUserMe(): void {
-    timer(0, 60 * 1000)
-      .pipe(
-        switchMap(() => this.readUserMe()),
-        shareReplay({ bufferSize: 1, refCount: true }),
-      )
-      .subscribe();
   }
 }

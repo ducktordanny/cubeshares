@@ -6,6 +6,7 @@ import (
 
 type UserStore interface {
 	GetUserById(id int64) (User, error)
+	UpdateUserBio(id int64, bio string) error
 	RegisterOrUpdateUser(wcaUser WCAUser) (User, error)
 	GetWCAUser(accessToken string) (WCAUser, error)
 }
@@ -39,4 +40,8 @@ type WCAUser struct {
 
 type WCAMe struct {
 	Me WCAUser `json:"me"`
+}
+
+type UpdateUserBioRequestBody struct {
+	Bio string `json:"bio"`
 }

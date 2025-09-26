@@ -10,3 +10,7 @@ export interface UserResponse {
   role: string;
   createdAt: Date;
 }
+
+export interface UpdateUserBioRequestBody {
+  bio: string;
+}

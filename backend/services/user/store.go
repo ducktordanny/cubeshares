@@ -31,6 +31,12 @@ func (store *Store) GetUserById(id int64) (types.User, error) {
 	return user, nil
 }
 
+func (store *Store) UpdateUserBio(id int64, bio string) error {
+	fmt.Println(id, bio)
+	_, err := store.db.Exec(`UPDATE "user" SET "bio" = $1 WHERE "id" = $2`, bio, id)
+	return err
+}
+
 func (store *Store) RegisterOrUpdateUser(wcaUser types.WCAUser) (types.User, error) {
 	_, err := store.db.Exec(`
 		INSERT INTO "user" ("id", "wcaId", "name", "email", "gender", "countryISO", "avatarURL")
