@@ -2,24 +2,17 @@ import { Component } from '@angular/core';
 
 import { ButtonModule } from 'primeng/button';
 
-import { UserService } from '@cubeshares/shared/services/user';
-import { AuthService } from '@cubeshares/shared/services/auth';
-import { JsonPipe } from '@angular/common';
+import { UserService } from '@cubeshares/services/user';
+
+import { UserDetailsCardComponent } from '../components/user-details-card/user-details-card.component';
 
 @Component({
   selector: 'cubeshares-me-page',
   templateUrl: 'me.page.html',
-  imports: [ButtonModule, JsonPipe],
+  imports: [ButtonModule, UserDetailsCardComponent],
 })
 export class MePageComponent {
   protected readonly user = this.userService.loggedInUser;
 
-  constructor(
-    private readonly authService: AuthService,
-    private readonly userService: UserService,
-  ) {}
-
-  protected onLogout(): void {
-    this.authService.logout();
-  }
+  constructor(private readonly userService: UserService) { }
 }

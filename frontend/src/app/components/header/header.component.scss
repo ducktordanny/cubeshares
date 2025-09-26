@@ -1,0 +1,46 @@
+:host {
+  .header {
+    width: 100%;
+    padding: 0.8rem;
+  }
+
+  .toolbar {
+    width: 100%;
+    border-radius: 1.6rem;
+    padding: 0.8rem 0.8rem 0.8rem 1.6rem;
+    background: var(--p-primary-600);
+  }
+
+  .logo {
+    display: inline-block;
+    height: 4rem;
+    width: 16rem;
+    background: var(--p-surface-100);
+    -webkit-mask: url("/icons/cubeshares-logo.svg") no-repeat center / contain;
+    mask: url("/icons/cubeshares-logo.svg") no-repeat center / contain;
+  }
+
+  .avatar-button {
+    background: none;
+    border: none;
+    border-radius: 50%;
+  }
+
+  .avatar {
+    height: 4rem;
+    width: 4rem;
+    cursor: pointer;
+  }
+
+  @media only screen and (max-width: 600px) {
+    .logo {
+      height: 2rem;
+      width: 8rem;
+    }
+
+    .avatar {
+      height: 2rem;
+      width: 2rem;
+    }
+  }
+}

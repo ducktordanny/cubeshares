@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 
-import { api } from '@cubeshares/shared/utils';
+import { api } from '@cubeshares/utils';
 
 import { HttpOptions } from './api.type';
 

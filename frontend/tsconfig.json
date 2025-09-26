@@ -19,8 +19,11 @@
     "module": "ES2022",
     "useDefineForClassFields": false,
     "paths": {
+      "@cubeshares/components/*": ["./src/app/components/*"],
       "@cubeshares/pages/*": ["./src/app/pages/*"],
-      "@cubeshares/shared/*": ["./src/app/shared/*"]
+      "@cubeshares/services/*": ["./src/app/services/*"],
+      "@cubeshares/utils": ["./src/app/utils"],
+      "@cubeshares/constants": ["./src/app/constants"]
     }
   },
   "angularCompilerOptions": {

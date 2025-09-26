@@ -1,0 +1,37 @@
+@let _user = user();
+
+<p-card>
+  <ng-template #header>
+    <p-avatar class="avatar" shape="circle" [image]="_user.avatarURL" />
+  </ng-template>
+  <ng-template #subtitle>
+    <h2>{{_user.name}}</h2>
+  </ng-template>
+  <section>
+    <h3>WCA ID</h3>
+    <p>
+      @if (_user.wcaId; as wcaId) {
+      <p-button link [label]="wcaId" variant="text" target="_blank" (onClick)="onWCAIDClick(wcaId)" />
+      } @else {
+      -
+      }
+    </p>
+  </section>
+  <section>
+    <h3>Country</h3>
+    <p class="country">
+      <span>{{_user.countryISO}}</span>
+      <img src="https://flagsapi.com/{{_user.countryISO}}/flat/32.png">
+    </p>
+  </section>
+  <section>
+    <h3 class="bio-header">Bio <i class="pi pi-pencil" (click)="onBioEdit()"></i></h3>
+    <p>{{_user.bio || '-'}}</p>
+  </section>
+  <section>
+    <h3>Joined Cubeshares</h3>
+    <p>{{_user.createdAt | date}}</p>
+  </section>
+</p-card>
+
+<cubeshares-user-bio-edit-dialog [visible]="bioEditVisible()" (visibleChange)="bioEditVisible.set($event)" />
