@@ -16,4 +16,8 @@ export class ApiService {
   create<T>(url: string, body: any | null, options?: HttpOptions<'post'>) {
     return this.http.post<T>(api(url), body, options);
   }
+
+  update<T>(url: string, body: any | null, options?: HttpOptions<'put'>) {
+    return this.http.put<T>(api(url), body, options);
+  }
 }
