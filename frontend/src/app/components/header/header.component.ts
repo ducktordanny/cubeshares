@@ -27,5 +27,5 @@ export class HeaderComponent {
   constructor(
     private readonly userService: UserService,
     private readonly authService: AuthService,
-  ) {}
+  ) { }
 }

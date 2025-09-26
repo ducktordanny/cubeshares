@@ -2,8 +2,10 @@ import { Route } from '@angular/router';
 
 import { isLoggedInGuard } from '@cubeshares/services/auth';
 
-import { MePageComponent } from './me/me.page';
 import { LayoutComponent } from '@cubeshares/components/layout/layout.component';
+
+import { MePageComponent } from './me/me.page';
+import { UserDetailsPageComponent } from './user-details/user-details.page';
 
 export const USER_ROUTES: Route[] = [
   {
@@ -19,6 +21,10 @@ export const USER_ROUTES: Route[] = [
         path: 'me',
         canActivate: [isLoggedInGuard],
         component: MePageComponent,
+      },
+      {
+        path: ':id',
+        component: UserDetailsPageComponent,
       },
     ],
   },

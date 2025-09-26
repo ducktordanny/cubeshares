@@ -4,14 +4,15 @@ import { ButtonModule } from 'primeng/button';
 
 import { UserService } from '@cubeshares/services/user';
 
+import { UserDetailsCardComponent } from '../components/user-details-card/user-details-card.component';
+
 @Component({
   selector: 'cubeshares-me-page',
   templateUrl: 'me.page.html',
-  styleUrl: 'me.page.scss',
-  imports: [ButtonModule],
+  imports: [ButtonModule, UserDetailsCardComponent],
 })
 export class MePageComponent {
   protected readonly user = this.userService.loggedInUser;
 
-  constructor(private readonly userService: UserService) {}
+  constructor(private readonly userService: UserService) { }
 }
