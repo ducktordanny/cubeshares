@@ -18,6 +18,7 @@ import { UserBioEditDialogComponent } from '../user-bio-edit-dialog/user-bio-edi
 })
 export class UserDetailsCardComponent {
   readonly user = input.required<UserResponse>();
+  readonly isEditable = input<boolean>(false);
 
   protected readonly bioEditVisible = signal<boolean>(false);
 
