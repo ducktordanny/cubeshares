@@ -2,6 +2,7 @@ package user
 
 import (
 	"net/http"
+	"strconv"
 
 	"github.com/ducktordanny/cubeshares/backend/middlewares"
 	"github.com/ducktordanny/cubeshares/backend/types"
@@ -20,6 +21,7 @@ func NewHandler(store types.UserStore) *Handler {
 func (handler *Handler) RegisterRoutes(router *gin.RouterGroup) {
 	router.GET("user/me", middlewares.UserAuthSessionMiddleware(), handler.handleUserMe)
 	router.PUT("user/me/bio", middlewares.UserAuthSessionMiddleware(), handler.handleUserMeBio)
+	router.GET("user/:id", handler.handleUserById)
 }
 
 func (handler *Handler) handleUserMe(context *gin.Context) {
@@ -45,4 +47,18 @@ func (handler *Handler) handleUserMeBio(context *gin.Context) {
 		return
 	}
 	context.Status(http.StatusNoContent)
+}
+
+func (handler *Handler) handleUserById(context *gin.Context) {
+	idString := context.Param("id")
+	id, err := strconv.ParseInt(idString, 10, 64)
+	if err != nil {
+		context.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"error": "Couldn't parse provided user ID"})
+	}
+	user, err := handler.store.GetUserById(id)
+	if err != nil {
+		context.AbortWithStatusJSON(http.StatusNotFound, gin.H{"error": "Couldn't find user by provided ID"})
+		return
+	}
+	context.IndentedJSON(http.StatusOK, user)
 }
