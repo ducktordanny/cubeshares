@@ -6,7 +6,7 @@ import { Menu } from 'primeng/menu';
 import { Toolbar } from 'primeng/toolbar';
 
 import { AuthService } from '@cubeshares/services/auth';
-import { UserService } from '@cubeshares/services/user';
+import { UserMeService } from '@cubeshares/services/user';
 
 @Component({
   selector: 'cubeshares-header',
@@ -15,7 +15,7 @@ import { UserService } from '@cubeshares/services/user';
   imports: [Avatar, Menu, Toolbar],
 })
 export class HeaderComponent {
-  protected readonly user = this.userService.loggedInUser;
+  protected readonly user = this.userMeService.loggedInUser;
   protected readonly userMenuItems: MenuItem[] = [
     {
       label: 'Sign out',
@@ -25,7 +25,7 @@ export class HeaderComponent {
   ];
 
   constructor(
-    private readonly userService: UserService,
+    private readonly userMeService: UserMeService,
     private readonly authService: AuthService,
   ) { }
 }

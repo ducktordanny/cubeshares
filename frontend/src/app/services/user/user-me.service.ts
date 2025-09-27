@@ -1,6 +1,7 @@
 import { inject, Injectable, signal } from '@angular/core';
-import { Router } from '@angular/router';
+import { HttpErrorResponse } from '@angular/common/http';
 
+import { MessageService } from 'primeng/api';
 import {
   catchError,
   of,
@@ -19,18 +20,18 @@ import { ApiService } from '../api';
 import { UpdateUserBioRequestBody, UserResponse } from './user.type';
 
 @Injectable({ providedIn: 'root' })
-export class UserService {
+export class UserMeService {
   readonly loggedInUser = signal<UserResponse | null>(null);
   readonly isLoading = signal<boolean>(true);
   private readonly resetPreviousPoll = new Subject<void>();
-  private readonly router = inject(Router);
   private readonly api = inject(ApiService);
+  private readonly messageService = inject(MessageService);
 
   constructor() {
-    this.pollOnReadUserMe();
+    this.pollReadUserMe();
   }
 
-  pollOnReadUserMe(): void {
+  pollReadUserMe(): void {
     this.resetPreviousPoll.next();
     timer(0, 60 * 1000)
       .pipe(
@@ -41,23 +42,26 @@ export class UserService {
       .subscribe();
   }
 
-  updateUserBio(requestBody: UpdateUserBioRequestBody): Observable<void> {
-    return this.api.update('user/me/bio', requestBody)
-  }
-
-  private readUserMe(): Observable<UserResponse | null> {
+  readUserMe(): Observable<UserResponse | null> {
     this.isLoading.set(true);
     return this.api
       .read<UserResponse>('user/me')
-      .pipe(take(1))
       .pipe(
-        tap((user) => this.loggedInUser.set(user)),
-        catchError(() => {
+        take(1),
+        tap(user => this.loggedInUser.set(user)),
+        catchError((httpError: HttpErrorResponse) => {
           this.loggedInUser.set(null);
-          this.router.navigate(['/login']);
+          if (![401].includes(httpError.status)) {
+            const { error } = httpError;
+            this.messageService.add({ severity: 'error', summary: 'Error', detail: error?.error || error || 'Unknown error' })
+          }
           return of(null);
         }),
         finalize(() => this.isLoading.set(false)),
       );
+  }
+
+  updateUserBio(requestBody: UpdateUserBioRequestBody): Observable<void> {
+    return this.api.update('user/me/bio', requestBody)
   }
 }
