@@ -1,4 +1,5 @@
 @let _user = user();
+@let _isEditable = isEditable();
 
 <p-card>
   <ng-template #header>
@@ -25,7 +26,12 @@
     </p>
   </section>
   <section>
-    <h3 class="bio-header">Bio <i class="pi pi-pencil" (click)="onBioEdit()"></i></h3>
+    <h3 class="bio-header">
+      Bio
+      @if (_isEditable) {
+        <i class="pi pi-pencil" (click)="onBioEdit()"></i>
+      }
+    </h3>
     <p>{{_user.bio || '-'}}</p>
   </section>
   <section>
@@ -34,4 +40,6 @@
   </section>
 </p-card>
 
-<cubeshares-user-bio-edit-dialog [currentValue]="_user.bio" [visible]="bioEditVisible()" (visibleChange)="bioEditVisible.set($event)" />
+@if (_isEditable) {
+  <cubeshares-user-bio-edit-dialog [currentValue]="_user.bio" [visible]="bioEditVisible()" (visibleChange)="bioEditVisible.set($event)" />
+}
