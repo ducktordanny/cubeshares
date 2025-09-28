@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"github.com/ducktordanny/cubeshares/backend/services/auth"
+	"github.com/ducktordanny/cubeshares/backend/services/posts"
 	"github.com/ducktordanny/cubeshares/backend/services/user"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
@@ -50,6 +51,10 @@ func (server *APIServer) Run() error {
 	userStore := user.NewStore(server.db)
 	userHandler := user.NewHandler(userStore)
 	userHandler.RegisterRoutes(subrouter)
+
+	postsStore := posts.NewStore(server.db)
+	postsHandler := posts.NewHandler(postsStore)
+	postsHandler.RegisterRoutes(subrouter)
 
 	authHandler := auth.NewHandler(userStore)
 	authHandler.RegisterRoutes(subrouter)
