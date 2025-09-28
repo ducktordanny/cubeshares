@@ -9,17 +9,17 @@ import {
 
 import { filter, map, tap } from 'rxjs';
 
-import { UserService } from '../user';
+import { UserMeService } from '../user';
 
 export const isLoggedInGuard: CanActivateFn = (
   _route: ActivatedRouteSnapshot,
   _state: RouterStateSnapshot,
 ) => {
-  const userService = inject(UserService);
+  const userMeService = inject(UserMeService);
   const router = inject(Router);
 
-  return toObservable(userService.loggedInUser).pipe(
-    filter(() => !userService.isLoading()),
+  return toObservable(userMeService.loggedInUser).pipe(
+    filter(() => !userMeService.isLoading()),
     map((user) => user !== null),
     tap((canActivate) => {
       if (!canActivate) void router.navigate(['/login']);

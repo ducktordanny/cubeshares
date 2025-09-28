@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 
 import { ButtonModule } from 'primeng/button';
 
-import { UserService } from '@cubeshares/services/user';
+import { UserMeService } from '@cubeshares/services/user';
 
 import { UserDetailsCardComponent } from '../components/user-details-card/user-details-card.component';
 
@@ -12,7 +12,7 @@ import { UserDetailsCardComponent } from '../components/user-details-card/user-d
   imports: [ButtonModule, UserDetailsCardComponent],
 })
 export class MePageComponent {
-  protected readonly user = this.userService.loggedInUser;
+  protected readonly user = this.userMeService.loggedInUser;
 
-  constructor(private readonly userService: UserService) { }
+  constructor(private readonly userMeService: UserMeService) { }
 }

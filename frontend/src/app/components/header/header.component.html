@@ -2,7 +2,7 @@
 
 <p-menu
   #userMenu
-  [model]="userMenuItems"
+  [model]="userMenuItems()"
   [popup]="true"
   appendTo="body"
 ></p-menu>
@@ -25,8 +25,8 @@
         >
           <p-avatar class="avatar" shape="circle" [image]="avatarURL" />
         </button>
-      } @else {
-        <p-avatar class="avatar" shape="circle" icon="pi pi-user" />
+      } @else if (!isLoading()) {
+        <p-button label="Sign up" severity="secondary" class="sign-up-button" (onClick)="onSignUp()" />
       }
     </ng-template>
   </p-toolbar>

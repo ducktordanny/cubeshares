@@ -23,7 +23,8 @@
       "@cubeshares/pages/*": ["./src/app/pages/*"],
       "@cubeshares/services/*": ["./src/app/services/*"],
       "@cubeshares/utils": ["./src/app/utils"],
-      "@cubeshares/constants": ["./src/app/constants"]
+      "@cubeshares/constants": ["./src/app/constants"],
+      "@cubeshares/signals": ["./src/app/signals"]
     }
   },
   "angularCompilerOptions": {

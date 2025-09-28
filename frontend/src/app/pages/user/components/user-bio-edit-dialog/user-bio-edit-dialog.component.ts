@@ -4,9 +4,9 @@ import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angul
 import { DialogModule } from 'primeng/dialog';
 import { ButtonModule } from "primeng/button";
 import { TextareaModule } from 'primeng/textarea';
-import { tap } from "rxjs";
+import { take, tap } from "rxjs";
 
-import { UpdateUserBioRequestBody, UserService } from "@cubeshares/services/user";
+import { UpdateUserBioRequestBody, UserMeService } from "@cubeshares/services/user";
 
 type UpdateUserBioForm = {
   [K in keyof UpdateUserBioRequestBody]: FormControl<UpdateUserBioRequestBody[K]>;
@@ -25,7 +25,7 @@ export class UserBioEditDialogComponent {
 
   protected form: FormGroup<UpdateUserBioForm> | undefined;
 
-  constructor(private readonly fb: FormBuilder, private readonly userService: UserService) {
+  constructor(private readonly fb: FormBuilder, private readonly userMeService: UserMeService) {
     effect(() => {
       const value = this.currentValue()
       untracked(() => {
@@ -41,10 +41,11 @@ export class UserBioEditDialogComponent {
     if (!this.form) return;
     const requestBody = this.form.getRawValue();
     requestBody.bio = requestBody.bio.trim();
-    this.userService.updateUserBio(requestBody).pipe(
+    this.userMeService.updateUserBio(requestBody).pipe(
+      take(1),
       tap(response => {
         if (response !== null) return;
-        this.userService.pollOnReadUserMe();
+        this.userMeService.pollReadUserMe();
         this.form?.reset();
         this.visibleChange.emit(false);
       })

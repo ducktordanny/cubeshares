@@ -38,7 +38,15 @@
     }
   }
 
+  .sign-up-button {
+    margin: 0 0.8rem;
+  }
+
   @media only screen and (max-width: 600px) {
+    .toolbar {
+      border-radius: 0.8rem;
+    }
+
     .logo {
       height: 2rem;
       width: 8rem;
@@ -47,6 +55,10 @@
     .avatar {
       height: 2rem;
       width: 2rem;
+    }
+
+    .sign-up-button {
+      margin: 0;
     }
   }
 }

@@ -7,13 +7,13 @@ import { catchError, of, finalize, take, tap } from 'rxjs';
 import { api } from '@cubeshares/utils';
 
 import { ApiService } from '../api';
-import { UserService } from '../user';
+import { UserMeService } from '../user';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   private readonly router = inject(Router);
   private readonly api = inject(ApiService);
-  private readonly userService = inject(UserService);
+  private readonly userMeService = inject(UserMeService);
 
   wcaOAuthLogin(): void {
     window.location.href = api('auth/login');
@@ -24,10 +24,10 @@ export class AuthService {
       .create<HttpResponse<unknown>>('auth/logout', null)
       .pipe(
         take(1),
-        tap(() => this.userService.loggedInUser.set(null)),
+        tap(() => this.userMeService.loggedInUser.set(null)),
         catchError(() => of(null)),
         finalize(() => {
-          this.userService.loggedInUser.set(null);
+          this.userMeService.loggedInUser.set(null);
           this.router.navigate(['/login']);
         }),
       )
