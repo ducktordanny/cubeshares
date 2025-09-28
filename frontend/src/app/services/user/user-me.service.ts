@@ -23,6 +23,7 @@ import { UpdateUserBioRequestBody, UserResponse } from './user.type';
 export class UserMeService {
   readonly loggedInUser = signal<UserResponse | null>(null);
   readonly isLoading = signal<boolean>(true);
+  readonly error = signal<HttpErrorResponse | null>(null);
   private readonly resetPreviousPoll = new Subject<void>();
   private readonly api = inject(ApiService);
   private readonly messageService = inject(MessageService);
@@ -44,6 +45,7 @@ export class UserMeService {
 
   readUserMe(): Observable<UserResponse | null> {
     this.isLoading.set(true);
+    this.error.set(null);
     return this.api
       .read<UserResponse>('user/me')
       .pipe(
@@ -51,6 +53,7 @@ export class UserMeService {
         tap(user => this.loggedInUser.set(user)),
         catchError((httpError: HttpErrorResponse) => {
           this.loggedInUser.set(null);
+          this.error.set(httpError);
           if (![401].includes(httpError.status)) {
             const { error } = httpError;
             this.messageService.add({ severity: 'error', summary: 'Error', detail: error?.error || error || 'Unknown error' })
