@@ -1,7 +1,7 @@
 package types
 
 type PostsStore interface {
-	CreateNewPost(userId int64, postRequestBody CreatePostRequestBody) (int64, error)
+	CreateNewPost(userId int64, postRequestBody CreatePostRequestBody) (CreatePostResponseBody, error)
 }
 
 type CreatePostRequestBody struct {
@@ -28,4 +28,8 @@ type SolveBase struct {
 	Scramble string   `json:"scramble"`
 	Solution *string  `json:"solution"`
 	Note     *string  `json:"note"`
+}
+
+type CreatePostResponseBody struct {
+	PostId int64 `json:"postId"`
 }

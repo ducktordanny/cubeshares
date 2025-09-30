@@ -5,6 +5,7 @@ import (
 
 	"github.com/ducktordanny/cubeshares/backend/middlewares"
 	"github.com/ducktordanny/cubeshares/backend/types"
+	"github.com/ducktordanny/cubeshares/backend/utils"
 	"github.com/gin-gonic/gin"
 )
 
@@ -36,11 +37,15 @@ func (handler *Handler) handleReadPostList(context *gin.Context) {
 }
 
 func (handler *Handler) handleCreatePost(context *gin.Context) {
-	context.IndentedJSON(http.StatusNotImplemented, gin.H{"message": "[POST] /api/v1/post WIP"})
+	claims := utils.GetAuthClaims(context)
 	var request types.CreatePostRequestBody
 	if err := context.ShouldBindJSON(&request); err != nil {
-		context.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"error": "Invalid request body" + err.Error()})
+		context.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"error": "Invalid request body: " + err.Error()})
 		return
 	}
-	context.IndentedJSON(http.StatusNotImplemented, gin.H{"message": "[POST] /api/v1/post WIP", "request": request})
+	response, err := handler.store.CreateNewPost(claims.Sub, request)
+	if err != nil {
+		context.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"error": "Could not create post: " + err.Error()})
+	}
+	context.IndentedJSON(http.StatusNotImplemented, gin.H{"message": "[POST] /api/v1/post WIP", "request": request, "response": response})
 }
