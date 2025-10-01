@@ -19,7 +19,7 @@ func NewStore(db *sql.DB) *Store {
 	return &Store{db: db}
 }
 
-func (store *Store) GetUserById(id int64) (types.User, error) {
+func (store *Store) ReadUserById(id int64) (types.User, error) {
 	var user types.User
 	err := store.db.QueryRow(`SELECT * FROM "user" WHERE "id" = $1`, id).Scan(
 		&user.Id, &user.WcaId, &user.Name, &user.Email, &user.Gender, &user.Bio,
@@ -52,10 +52,10 @@ func (store *Store) RegisterOrUpdateUser(wcaUser types.WCAUser) (types.User, err
 	if err != nil {
 		return types.User{}, err
 	}
-	return store.GetUserById(wcaUser.Id)
+	return store.ReadUserById(wcaUser.Id)
 }
 
-func (store *Store) GetWCAUser(accessToken string) (types.WCAUser, error) {
+func (store *Store) ReadWCAUser(accessToken string) (types.WCAUser, error) {
 	meURL := "https://www.worldcubeassociation.org/api/v0/me"
 	req, err := http.NewRequest("GET", meURL, nil)
 	if err != nil {

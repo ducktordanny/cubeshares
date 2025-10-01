@@ -81,7 +81,7 @@ func (handler *Handler) handleOAuthCallback(context *gin.Context) {
 		return
 	}
 
-	wcaUser, err := handler.store.GetWCAUser(authInfo.AccessToken)
+	wcaUser, err := handler.store.ReadWCAUser(authInfo.AccessToken)
 	if err != nil {
 		context.JSON(http.StatusInternalServerError, gin.H{
 			"error": "Failed to get WCA user: " + err.Error(),
