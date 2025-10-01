@@ -1,9 +1,11 @@
 package posts
 
 import (
+	"context"
 	"database/sql"
-	"time"
+	"encoding/json"
 
+	"github.com/ducktordanny/cubeshares/backend/db/queries"
 	"github.com/ducktordanny/cubeshares/backend/types"
 )
 
@@ -15,9 +17,31 @@ func NewStore(db *sql.DB) *Store {
 	return &Store{db: db}
 }
 
-func (store *Store) CreateNewPost(userId int64, postRequestBody types.CreatePostRequestBody) (types.CreatePostResponseBody, error) {
-	createdAt := time.Now()
+var _ types.PostsStore = (*Store)(nil)
 
+func (store *Store) ReadPostsOfUser(ctx context.Context, userId int64) ([]types.ReadPostResponseBody, error) {
+	rows, err := store.db.QueryContext(ctx, queries.ReadPostsOfUserQuery, userId)
+	if err != nil {
+		return []types.ReadPostResponseBody{}, err
+	}
+	defer rows.Close()
+
+	var posts []types.ReadPostResponseBody
+	for rows.Next() {
+		var b []byte
+		if err := rows.Scan(&b); err != nil {
+			return []types.ReadPostResponseBody{}, err
+		}
+		var post types.ReadPostResponseBody
+		if err := json.Unmarshal(b, &post); err != nil {
+			return nil, err
+		}
+		posts = append(posts, post)
+	}
+	return posts, nil
+}
+
+func (store *Store) CreateNewPost(ctx context.Context, userId int64, postRequestBody types.CreatePostRequestBody) (types.CreatePostResponseBody, error) {
 	// TODO: implement later
 	if postRequestBody.Average != nil {
 	}
@@ -26,11 +50,7 @@ func (store *Store) CreateNewPost(userId int64, postRequestBody types.CreatePost
 	}
 
 	var postId int64
-	err := store.db.QueryRow(`
-		INSERT INTO "post" ("userId", "description", "createdAt")
-		VALUES ($1, $2, $3)
-		RETURNING id
-	`, userId, postRequestBody.Description, createdAt).Scan(&postId)
+	err := store.db.QueryRowContext(ctx, queries.CreateBasicPostQuery, userId, postRequestBody.Description).Scan(&postId)
 
 	if err != nil {
 		return types.CreatePostResponseBody{}, err

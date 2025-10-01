@@ -2,6 +2,7 @@ package posts
 
 import (
 	"net/http"
+	"strconv"
 
 	"github.com/ducktordanny/cubeshares/backend/middlewares"
 	"github.com/ducktordanny/cubeshares/backend/types"
@@ -33,7 +34,22 @@ func (handler *Handler) handleReadPostById(context *gin.Context) {
 }
 
 func (handler *Handler) handleReadPostList(context *gin.Context) {
-	context.IndentedJSON(http.StatusNotImplemented, gin.H{"message": "[GET] /api/v1/posts WIP"})
+	userIdString := context.Query("userId")
+	if userIdString == "" {
+		context.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"error": "Missing userId"})
+		return
+	}
+	userId, err := strconv.ParseInt(userIdString, 10, 64)
+	if err != nil {
+		context.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"error": "Invalid userId"})
+		return
+	}
+	response, err := handler.store.ReadPostsOfUser(context.Request.Context(), userId)
+	if err != nil {
+		context.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"error": "Could not read posts: " + err.Error()})
+		return
+	}
+	context.IndentedJSON(http.StatusOK, response)
 }
 
 func (handler *Handler) handleCreatePost(context *gin.Context) {
@@ -43,9 +59,10 @@ func (handler *Handler) handleCreatePost(context *gin.Context) {
 		context.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"error": "Invalid request body: " + err.Error()})
 		return
 	}
-	response, err := handler.store.CreateNewPost(claims.Sub, request)
+	response, err := handler.store.CreateNewPost(context.Request.Context(), claims.Sub, request)
 	if err != nil {
 		context.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"error": "Could not create post: " + err.Error()})
+		return
 	}
 	context.IndentedJSON(http.StatusOK, response)
 }
