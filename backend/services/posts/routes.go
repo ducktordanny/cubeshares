@@ -47,5 +47,5 @@ func (handler *Handler) handleCreatePost(context *gin.Context) {
 	if err != nil {
 		context.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"error": "Could not create post: " + err.Error()})
 	}
-	context.IndentedJSON(http.StatusNotImplemented, gin.H{"message": "[POST] /api/v1/post WIP", "request": request, "response": response})
+	context.IndentedJSON(http.StatusOK, response)
 }
