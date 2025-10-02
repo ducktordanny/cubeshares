@@ -140,9 +140,9 @@ func initUserAuthSession(context *gin.Context, user types.User) {
 	expiresAt := time.Now().Add(sessionAge).Unix()
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
-		"sub":   user.Id,
-		"email": user.Email,
-		"exp":   expiresAt,
+		"userId": user.Id,
+		"email":  user.Email,
+		"exp":    expiresAt,
 	})
 	tokenString, err := token.SignedString(secret)
 	if err != nil {

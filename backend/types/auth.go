@@ -12,8 +12,7 @@ type WCAAuthorizationInfo struct {
 }
 
 type AuthClaims struct {
-	Sub   int64  `json:"sub"`
-	Email string `json:"email"`
-	Exp   int64  `json:"exp"`
+	UserId int64  `json:"userId"`
+	Email  string `json:"email"`
 	jwt.RegisteredClaims
 }

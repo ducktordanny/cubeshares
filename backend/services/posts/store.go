@@ -38,6 +38,9 @@ func (store *Store) ReadPostsOfUser(ctx context.Context, userId int64) ([]types.
 		}
 		posts = append(posts, post)
 	}
+	if posts == nil {
+		return []types.ReadPostResponseBody{}, nil
+	}
 	return posts, nil
 }
 

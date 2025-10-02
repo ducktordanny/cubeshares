@@ -1,9 +1,9 @@
-CREATE TABLE IF NOT EXISTS "puzzleCategory" (
-  "id" SERIAL PRIMARY KEY,
-  "name" TEXT UNIQUE NOT NULL
+CREATE TABLE IF NOT EXISTS puzzle_categories (
+  id SERIAL PRIMARY KEY,
+  name TEXT UNIQUE NOT NULL
 );
 
-INSERT INTO "puzzleCategory" (name)
+INSERT INTO puzzle_categories (name)
 VALUES
   ('3x3'),
   ('2x2'),
