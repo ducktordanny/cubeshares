@@ -59,7 +59,7 @@ func (handler *Handler) handleCreatePost(context *gin.Context) {
 		context.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"error": "Invalid request body: " + err.Error()})
 		return
 	}
-	response, err := handler.store.CreateNewPost(context.Request.Context(), claims.Sub, request)
+	response, err := handler.store.CreateNewPost(context.Request.Context(), claims.UserId, request)
 	if err != nil {
 		context.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"error": "Could not create post: " + err.Error()})
 		return
