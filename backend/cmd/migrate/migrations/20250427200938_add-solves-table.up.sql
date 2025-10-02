@@ -8,5 +8,5 @@ CREATE TABLE IF NOT EXISTS solves (
   scramble TEXT NOT NULL,
   solution TEXT,
   note TEXT,
-  created_at TIMESTAMP NOT NULL DEFAULT NOW()
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );

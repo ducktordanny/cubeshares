@@ -8,5 +8,5 @@ CREATE TABLE IF NOT EXISTS users (
   country_iso TEXT NOT NULL,
   avatar_url TEXT,
   role TEXT DEFAULT 'user',
-  created_at TIMESTAMP NOT NULL DEFAULT NOW()
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
