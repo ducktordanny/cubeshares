@@ -58,6 +58,7 @@ export class UserMeService {
             const { error } = httpError;
             this.messageService.add({ severity: 'error', summary: 'Error', detail: error?.error || error || 'Unknown error' })
           }
+          this.resetPreviousPoll.next();
           return of(null);
         }),
         finalize(() => this.isLoading.set(false)),
