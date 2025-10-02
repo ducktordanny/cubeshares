@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, effect, untracked } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { ButtonModule } from 'primeng/button';
 
@@ -14,5 +15,10 @@ import { UserDetailsCardComponent } from '../components/user-details-card/user-d
 export class MePageComponent {
   protected readonly user = this.userMeService.loggedInUser;
 
-  constructor(private readonly userMeService: UserMeService) { }
+  constructor(private readonly userMeService: UserMeService, private readonly router: Router) {
+    effect(() => {
+      const user = this.user();
+      untracked(() => !user && void this.router.navigate(['/login']))
+    })
+  }
 }
