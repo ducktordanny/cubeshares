@@ -8,6 +8,7 @@ import (
 	"net/http"
 
 	"github.com/ducktordanny/cubeshares/backend/configs"
+	"github.com/ducktordanny/cubeshares/backend/db/queries"
 	"github.com/ducktordanny/cubeshares/backend/types"
 )
 
@@ -19,9 +20,11 @@ func NewStore(db *sql.DB) *Store {
 	return &Store{db: db}
 }
 
-func (store *Store) GetUserById(id int64) (types.User, error) {
+var _ types.UserStore = (*Store)(nil)
+
+func (store *Store) ReadUserById(id int64) (types.User, error) {
 	var user types.User
-	err := store.db.QueryRow(`SELECT * FROM "user" WHERE "id" = $1`, id).Scan(
+	err := store.db.QueryRow(queries.ReadUserByIdQuery, id).Scan(
 		&user.Id, &user.WcaId, &user.Name, &user.Email, &user.Gender, &user.Bio,
 		&user.CountryISO, &user.AvatarURL, &user.Role, &user.CreatedAt,
 	)
@@ -33,29 +36,22 @@ func (store *Store) GetUserById(id int64) (types.User, error) {
 
 func (store *Store) UpdateUserBio(id int64, bio string) error {
 	fmt.Println(id, bio)
-	_, err := store.db.Exec(`UPDATE "user" SET "bio" = $1 WHERE "id" = $2`, bio, id)
+	_, err := store.db.Exec(queries.UpdateUserBioQuery, bio, id)
 	return err
 }
 
 func (store *Store) RegisterOrUpdateUser(wcaUser types.WCAUser) (types.User, error) {
-	_, err := store.db.Exec(`
-		INSERT INTO "user" ("id", "wcaId", "name", "email", "gender", "countryISO", "avatarURL")
-		VALUES ($1, $2, $3, $4, $5, $6, $7)
-		ON CONFLICT ("id") DO UPDATE
-		SET "wcaId" = EXCLUDED."wcaId",
-		    "name" = EXCLUDED."name",
-		    "email" = EXCLUDED."email",
-		    "avatarURL" = EXCLUDED."avatarURL"`,
+	_, err := store.db.Exec(queries.InsertOrUpdateUserQuery,
 		wcaUser.Id, wcaUser.WcaId, wcaUser.Name, wcaUser.Email,
 		wcaUser.Gender, wcaUser.CountryIso2, wcaUser.Avatar.Url,
 	)
 	if err != nil {
 		return types.User{}, err
 	}
-	return store.GetUserById(wcaUser.Id)
+	return store.ReadUserById(wcaUser.Id)
 }
 
-func (store *Store) GetWCAUser(accessToken string) (types.WCAUser, error) {
+func (store *Store) ReadWCAUser(accessToken string) (types.WCAUser, error) {
 	meURL := "https://www.worldcubeassociation.org/api/v0/me"
 	req, err := http.NewRequest("GET", meURL, nil)
 	if err != nil {

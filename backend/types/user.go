@@ -5,15 +5,15 @@ import (
 )
 
 type UserStore interface {
-	GetUserById(id int64) (User, error)
+	ReadUserById(id int64) (User, error)
 	UpdateUserBio(id int64, bio string) error
 	RegisterOrUpdateUser(wcaUser WCAUser) (User, error)
-	GetWCAUser(accessToken string) (WCAUser, error)
+	ReadWCAUser(accessToken string) (WCAUser, error)
 }
 
 type User struct {
 	Id         int64     `json:"id"`
-	WcaId      *string   `json:"wcaId"` // can be null
+	WcaId      *string   `json:"wcaId"`
 	Name       string    `json:"name"`
 	Email      string    `json:"email"`
 	Gender     string    `json:"gender"`

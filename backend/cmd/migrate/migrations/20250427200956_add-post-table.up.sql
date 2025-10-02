@@ -4,5 +4,5 @@ CREATE TABLE IF NOT EXISTS "post" (
   "averageId" INT REFERENCES average(id),
   "solveId" INT REFERENCES solve(id),
   "description" TEXT,
-  "createdAt" TIMESTAMP NOT NULL DEFAULT NOW()
+  "createdAt" TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );

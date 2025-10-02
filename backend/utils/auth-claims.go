@@ -7,7 +7,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func GetAuthClaims(context *gin.Context) *types.AuthClaims {
+func ReadAuthClaims(context *gin.Context) *types.AuthClaims {
 	claims, ok := context.Get("auth")
 	if !ok {
 		handleNotFoundClaims(context)

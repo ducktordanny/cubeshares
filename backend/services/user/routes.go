@@ -25,8 +25,8 @@ func (handler *Handler) RegisterRoutes(router *gin.RouterGroup) {
 }
 
 func (handler *Handler) handleUserMe(context *gin.Context) {
-	claims := utils.GetAuthClaims(context)
-	user, err := handler.store.GetUserById(claims.Sub)
+	claims := utils.ReadAuthClaims(context)
+	user, err := handler.store.ReadUserById(claims.Sub)
 	if err != nil {
 		context.AbortWithStatusJSON(http.StatusNotFound, gin.H{"error": "Couldn't find authenticated user"})
 		return
@@ -35,7 +35,7 @@ func (handler *Handler) handleUserMe(context *gin.Context) {
 }
 
 func (handler *Handler) handleUserMeBio(context *gin.Context) {
-	claims := utils.GetAuthClaims(context)
+	claims := utils.ReadAuthClaims(context)
 	var request types.UpdateUserBioRequestBody
 	if err := context.ShouldBindJSON(&request); err != nil {
 		context.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"error": "Invalid request body"})
@@ -55,7 +55,7 @@ func (handler *Handler) handleUserById(context *gin.Context) {
 	if err != nil {
 		context.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"error": "Couldn't parse provided user ID"})
 	}
-	user, err := handler.store.GetUserById(id)
+	user, err := handler.store.ReadUserById(id)
 	if err != nil {
 		context.AbortWithStatusJSON(http.StatusNotFound, gin.H{"error": "Couldn't find user by provided ID"})
 		return
