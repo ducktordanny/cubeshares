@@ -11,5 +11,6 @@ var InsertOrUpdateUserQuery string = `
 	SET wca_id = EXCLUDED.wca_id,
 			name = EXCLUDED.name,
 			email = EXCLUDED.email,
-			avatar_url = EXCLUDED.avatar_url
+			avatar_url = EXCLUDED.avatar_url,
+			country_iso = EXCLUDED.country_iso
 `
